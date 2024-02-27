@@ -9,33 +9,33 @@ export const tiendaProductoModel = sequelize.define("tiendas_productos",
         autoIncrement: true,
         primaryKey: true
     },
-    estado:{
-        type: DataTypes.TINYINT,
+    compra_maxima:{
+        type: DataTypes.DECIMAL(3,1),
+        allowNull: false
     },
-    kit:{
-        type: DataTypes.TINYINT
+    valor:{
+        type: DataTypes.DECIMAL(11,3),
+        allowNull: false
     },
-    barcode:{
-        type: DataTypes.STRING(30),
-        allowNull:false
+    id_promocion:{
+        type: DataTypes.MEDIUMINT,
     },
-    nombre:{
-        type: DataTypes.STRING(60),
-        allowNull:false
+    id_tienda:{
+        type: DataTypes.SMALLINT,
+        allowNull:false,
+        references:{
+            model: "tiendas",
+            key:"id"
+        }
     },
-    presentacion:{
-        type: DataTypes.STRING(25),
-        allowNull:false
-    },
-    descripcion:{
-        type: DataTypes.STRING(500),
-    },
-    foto:{
-        type: DataTypes.STRING(120),
-    },
-    peso:{
-        type: DataTypes.DECIMAL(6,2)
-    }
+    id_producto:{
+        type: DataTypes.INTEGER,
+        allowNull:false,
+        references:{
+            model: "productos",
+            key:"id"
+        }
+},
 },{
     tableName:"tiendas_productos",
     timestamps:false

@@ -1,4 +1,4 @@
-import { productoModel } from "../models/producto.js";
+import { productoModel } from "../models/index.js";
 import { validationResult } from "express-validator";
 
 export class productoController{
