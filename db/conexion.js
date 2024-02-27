@@ -3,7 +3,7 @@ import { envairoments } from "../config/envairoments.js";
 
 const {host, user, password, database, port} = envairoments.my_conexion;
 
-export const sequelize = new Sequelize(user, password, database,{
+export const sequelize = new Sequelize(database, user, password, {
     host: host,
     dialect: "mysql",
     port: port
