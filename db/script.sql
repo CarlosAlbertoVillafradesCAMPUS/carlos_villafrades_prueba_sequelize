@@ -24,6 +24,7 @@ SET time_zone = "+00:00";
 --
 -- Estructura de tabla para la tabla `carritos`
 --
+
 CREATE DATABASE Market;
 USE Market;
 CREATE TABLE `carritos` (
@@ -449,3 +450,13 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+
+
+/*use sparkleDB;
+
+select * from entrepreneurship;
+
+UPDATE entrepreneurship SET state= "en espera" WHERE id = 65;
+
+DELETE from entrepreneurs WHERE id=30;*/
