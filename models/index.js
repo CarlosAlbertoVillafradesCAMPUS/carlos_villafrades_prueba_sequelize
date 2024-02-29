@@ -3,6 +3,8 @@ import { tiendaModel } from "./tienda.js";
 import { productoModel } from "./producto.js";
 import { promocionModel } from "./promocion.js";
 import { tiendaPromocionModel } from "./tienda_promocion.js";
+import { carritoModel } from "./carrito.js";
+import { userModel } from "./user.js";
 
 /*
 //RELACION tiendas y productos
@@ -26,6 +28,16 @@ tiendaPromocionModel.belongsTo(promocionModel, { foreignKey: 'id_promocion' });
 tiendaModel.hasMany(tiendaPromocionModel, { foreignKey: 'id_tienda' });
 tiendaPromocionModel.belongsTo(tiendaModel, { foreignKey: 'id_tienda' });
 
+carritoModel.belongsTo(productoModel, {foreignKey: "id_producto"})
+productoModel.hasOne(carritoModel, {foreignKey: "id_producto"})
+
+carritoModel.belongsTo(tiendaModel, {foreignKey: "id_tienda"})
+tiendaModel.hasOne(carritoModel, {foreignKey: "id_tienda"})
+
+carritoModel.belongsTo(userModel, {foreignKey: "id_user"})
+userModel.hasOne(carritoModel, {foreignKey: "id_user"})
+
+
 
 
 export {
@@ -33,5 +45,7 @@ export {
     tiendaModel,
     productoModel,
     promocionModel,
-    tiendaPromocionModel
+    tiendaPromocionModel,
+    carritoModel,
+    userModel
 }
