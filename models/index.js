@@ -1,10 +1,13 @@
-import { tiendaProductoModel } from "./tienda_producto.js";
-import { tiendaModel } from "./tienda.js";
-import { productoModel } from "./producto.js";
-import { promocionModel } from "./promocion.js";
-import { tiendaPromocionModel } from "./tienda_promocion.js";
-import { carritoModel } from "./carrito.js";
-import { userModel } from "./user.js";
+import { tiendaProductoModel } from "./model/tienda_producto.js";
+import { tiendaModel } from "./model/tienda.js";
+import { productoModel } from "./model/producto.js";
+import { promocionModel } from "./model/promocion.js";
+import { tiendaPromocionModel } from "./model/tienda_promocion.js";
+import { carritoModel } from "./model/carrito.js";
+import { userModel } from "./model/user.js";
+import { pedidoModel } from "./model/pedido.js";
+import { pedidoEstadoModel } from "./model/pedido_estado.js";
+import { pedidoProductoModel } from "./model/pedido_producto.js";
 
 /*
 //RELACION tiendas y productos
@@ -15,7 +18,8 @@ tiendaModel.belongsToMany(productoModel, {through: tiendaProductoModel, foreignK
 tiendaModel.belongsToMany(promocionModel, {through: tiendaPromocionModel, foreignKey:"id_tienda"})
 promocionModel.belongsToMany(tiendaModel, {through: tiendaPromocionModel, foreignKey:"id_promocion"})*/
 
-// Define las relaciones entre los modelos
+// Definicion de las relaciones entre los modelos
+
 tiendaModel.hasMany(tiendaProductoModel, { foreignKey: 'id_tienda' });
 tiendaProductoModel.belongsTo(tiendaModel, { foreignKey: 'id_tienda' });
 
@@ -28,14 +32,31 @@ tiendaPromocionModel.belongsTo(promocionModel, { foreignKey: 'id_promocion' });
 tiendaModel.hasMany(tiendaPromocionModel, { foreignKey: 'id_tienda' });
 tiendaPromocionModel.belongsTo(tiendaModel, { foreignKey: 'id_tienda' });
 
+// relacion CARRITOS Y PRODUCTO
 carritoModel.belongsTo(productoModel, {foreignKey: "id_producto"})
 productoModel.hasOne(carritoModel, {foreignKey: "id_producto"})
 
+// relacion CARRITOS Y TIENDAS
 carritoModel.belongsTo(tiendaModel, {foreignKey: "id_tienda"})
-tiendaModel.hasOne(carritoModel, {foreignKey: "id_tienda"})
+tiendaModel.hasMany(carritoModel, {foreignKey: "id_tienda"})
 
+// relacion CARRITOS Y USERS
 carritoModel.belongsTo(userModel, {foreignKey: "id_user"})
-userModel.hasOne(carritoModel, {foreignKey: "id_user"})
+userModel.hasMany(carritoModel, {foreignKey: "id_user"})
+
+// relacion PEDIDOS Y TIENDAS
+pedidoModel.belongsTo(tiendaModel, {foreignKey: "id_tienda"})
+tiendaModel.hasMany(pedidoModel, {foreignKey: "id_tienda"})
+
+// relacion PEDIDOS_ESTADOS Y PEDIDOS 
+pedidoEstadoModel.belongsTo(pedidoModel, {foreignKey: "id_pedido"})
+pedidoModel.hasOne(pedidoEstadoModel, {foreignKey: "id_pedido"})
+
+// relacion  PEDIDOS_PRODUCTOS Y PEDIDOS 
+pedidoModel.belongsToMany(productoModel, {through: pedidoProductoModel, foreignKey:"id_pedido"})
+productoModel.belongsToMany(pedidoModel, {through: pedidoProductoModel, foreignKey:"id_producto"})
+
+// relacion  PEDIDOS_PRODUCTOS Y PRODUCTO 
 
 
 
@@ -47,5 +68,8 @@ export {
     promocionModel,
     tiendaPromocionModel,
     carritoModel,
-    userModel
+    userModel,
+    pedidoModel,
+    pedidoEstadoModel,
+    pedidoProductoModel
 }

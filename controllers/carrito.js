@@ -1,4 +1,4 @@
-import { productoModel, tiendaModel, carritoModel, userModel } from "../models/index.js";
+import { productoModel, tiendaModel, carritoModel, userModel, tiendaProductoModel } from "../models/index.js";
 import { validationResult } from "express-validator";
 
 export class carritoController{
@@ -10,14 +10,19 @@ export class carritoController{
         const user = req.body.id_user || 1;
         const cantidad = req.body.id_user || 1;
         try {
-             //validar si existe el prdocuto
-            const validateProducto = await productoModel.findByPk(req.body.id_producto)
-            console.log(validateProducto);
-            if (!validateProducto) return  res.status(400).json({status:400, message:`No se encuentra ningun producto con el id: ${req.body.id_producto}`})
 
-            //validar si existe la tienda
+            //validar si la tienda usuario
             const validateTienda = await tiendaModel.findByPk(req.body.id_tienda)
             if (!validateTienda) return  res.status(400).json({status:400, message:`No se encuentra ninguna tienda con el id: ${req.body.id_tienda}`})
+
+             //validar si el producto exite en esa tienda
+            const validateProducto = await tiendaProductoModel.findOne({
+                where:{
+                    id_tienda: req.body.id_tienda,
+                    id_producto: req.body.id_producto
+                }
+            })
+            if (!validateProducto) return  res.status(400).json({status:400, message:`No existe producto con el id: ${req.body.id_producto} en esta tienda`})
 
             //validar si existe el usuario
             const validateUser = await userModel.findByPk(user)
@@ -36,4 +41,19 @@ export class carritoController{
             res.status(400).json({status:400, message: error.message})
         }
     } 
+
+    static async getCarrito(req,res){
+        const data = await userModel.findAll(
+            {
+                include: {
+                    model: carritoModel,
+                    include:{
+                        model:productoModel
+                    }
+                }
+            }
+        )
+
+        res.json({message: data})
+    }
 }   

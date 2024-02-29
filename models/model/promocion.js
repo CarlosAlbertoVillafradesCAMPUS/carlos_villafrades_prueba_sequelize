@@ -1,4 +1,4 @@
-import { sequelize } from "../db/conexion.js";
+import { sequelize } from "../../db/conexion.js";
 import { DataTypes  } from "sequelize";
 
 export const promocionModel = sequelize.define("promociones",
