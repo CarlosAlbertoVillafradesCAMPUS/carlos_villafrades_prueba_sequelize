@@ -1,14 +1,69 @@
 import { productoModel, tiendaModel, tiendaProductoModel, carritoModel, userModel, userDireccionModel, pedidoModel, pedidoEstadoModel, pedidoProductoModel } from "../models/index.js";
 import { sequelize } from "../db/conexion.js";
 import { validationResult } from "express-validator";
-import { where } from "sequelize";
+import { where, Op } from "sequelize";
 
 export class pedidoController{
+
+    static async getPedido(req,res){
+        //Validar si hay errores en la validacion de datos (DTO)
+        const errors = validationResult(req)
+        if (!errors.isEmpty()) return res.status(400).json({status:400, message:errors.errors[0].msg})
+
+        const {id_user} = req.params
+        /*const loadTiendas = await tiendaModel.findAll(
+            {
+                include: [
+                  {
+                    model: pedidoModel,
+                    where: { id_user: id_user },
+                    include:[
+                        {
+                            model: pedidoEstadoModel,
+                            where:{
+                                estado:{
+                                    [Op.or]: [1, 2, 3]
+                                }
+                            }
+                        },
+                        {
+                            model: productoModel,
+                            attributes: ["id", "nombre", "presentacion", sequelize.subQuery(
+                                sequelize.fn('sum', sequelize.col('tiendas_productos.valor')),
+                                {
+                                  model: tiendaProductoModel,
+                                  where: {
+                                    PedidoId: sequelize.col('Pedido.id')
+                                  }
+                                }
+                              ),],
+                        }
+                    ]
+                  },
+                ],
+              }
+        )*/
+
+        const loadTiendas = await sequelize.query(`SELECT t.*, JSON_ARRAYAGG(JSON_OBJECT('id', p.id, 'fecha', p.entrega_fecha, 'estado', pe.estado, 'valor_final', p.valor_final, 'productos', JSON_ARRAY(JSON_OBJECT('nombre', pro.nombre)))) AS pedidos FROM tiendas t INNER JOIN pedidos p ON p.id_tienda = t.id INNER JOIN pedidos_estados pe ON pe.id_pedido = p.id INNER JOIN pedidos_productos pp ON pp.id_pedido = p.id INNER JOIN productos pro ON pro.id = pp.id_producto WHERE p.id_user = 1 GROUP BY t.id, pro.id;`)
+
+        res.status(201).json({status:200,message: loadTiendas}) 
+
+    }
+
     static async postPedido(req,res){
         //Validar si hay errores en la validacion de datos (DTO)
         const errors = validationResult(req)
         if (!errors.isEmpty()) return res.status(400).json({status:400, message:errors.errors[0].msg})
         let transaction;
+
+        //validar si la tienda y el usuario son validos
+        const validateTienda = await tiendaModel.findByPk(req.body.id_tienda)
+        if (!validateTienda) return  res.status(400).json({status:400, message:`No se encuentra ninguna tienda con el id: ${req.body.id_tienda}`})
+
+        //validar si la tienda y el usuario son validos
+        const validateUsuario = await userModel.findByPk(req.body.id_user)
+        if (!validateUsuario) return  res.status(400).json({status:400, message:`No se encuentra ningun usuario con el id: ${req.body.id_user}`})
+
 
     let dataPostPedido = {
         instrucciones: req.body.instrucciones,

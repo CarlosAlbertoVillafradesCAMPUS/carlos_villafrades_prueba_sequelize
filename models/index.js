@@ -49,6 +49,10 @@ userModel.hasMany(carritoModel, {foreignKey: "id_user"})
 pedidoModel.belongsTo(tiendaModel, {foreignKey: "id_tienda"})
 tiendaModel.hasMany(pedidoModel, {foreignKey: "id_tienda"})
 
+// relacion PEDIDOS Y USERS
+pedidoModel.belongsTo(userModel, {foreignKey: "id_user"})
+userModel.hasMany(pedidoModel, {foreignKey: "id_user"})
+
 // relacion PEDIDOS_ESTADOS Y PEDIDOS 
 pedidoEstadoModel.belongsTo(pedidoModel, {foreignKey: "id_pedido"})
 pedidoModel.hasOne(pedidoEstadoModel, {foreignKey: "id_pedido"})
