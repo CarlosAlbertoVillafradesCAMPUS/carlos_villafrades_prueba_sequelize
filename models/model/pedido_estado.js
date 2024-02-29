@@ -4,7 +4,7 @@ import { DataTypes  } from "sequelize";
 export const pedidoEstadoModel = sequelize.define("pedidos_estados",
     {
         id:{
-            type: DataTypes.INTEGER,
+            type: DataTypes.INTEGER.UNSIGNED,
             allowNull: false,
             autoIncrement: true,
             primaryKey: true
@@ -13,7 +13,7 @@ export const pedidoEstadoModel = sequelize.define("pedidos_estados",
             type: DataTypes.TINYINT.UNSIGNED,
         },
         id_pedido:{
-            type: DataTypes.MEDIUMINT,
+            type: DataTypes.MEDIUMINT.UNSIGNED,
             allowNull:false
         },
         created_at:{

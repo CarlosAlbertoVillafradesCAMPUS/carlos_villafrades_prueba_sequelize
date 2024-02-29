@@ -8,6 +8,7 @@ import { userModel } from "./model/user.js";
 import { pedidoModel } from "./model/pedido.js";
 import { pedidoEstadoModel } from "./model/pedido_estado.js";
 import { pedidoProductoModel } from "./model/pedido_producto.js";
+import { userDireccionModel } from "./model/user_direccion.js";
 
 /*
 //RELACION tiendas y productos
@@ -56,8 +57,9 @@ pedidoModel.hasOne(pedidoEstadoModel, {foreignKey: "id_pedido"})
 pedidoModel.belongsToMany(productoModel, {through: pedidoProductoModel, foreignKey:"id_pedido"})
 productoModel.belongsToMany(pedidoModel, {through: pedidoProductoModel, foreignKey:"id_producto"})
 
-// relacion  PEDIDOS_PRODUCTOS Y PRODUCTO 
-
+// relacion  USERS Y USERS_DIRECCIONES 
+userDireccionModel.belongsTo(userModel, {foreignKey: "id_user"})
+userModel.hasOne(userDireccionModel, {foreignKey: "id_user"})
 
 
 
@@ -71,5 +73,6 @@ export {
     userModel,
     pedidoModel,
     pedidoEstadoModel,
-    pedidoProductoModel
+    pedidoProductoModel,
+    userDireccionModel
 }

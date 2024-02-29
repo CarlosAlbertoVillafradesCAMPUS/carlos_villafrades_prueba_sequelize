@@ -4,7 +4,7 @@ import { DataTypes } from "sequelize";
 export const tiendaProductoModel = sequelize.define("tiendas_productos",
 {
     id:{
-        type: DataTypes.INTEGER,
+        type: DataTypes.INTEGER.UNSIGNED,
         allowNull: false,
         autoIncrement: true,
         primaryKey: true
@@ -21,7 +21,7 @@ export const tiendaProductoModel = sequelize.define("tiendas_productos",
         type: DataTypes.MEDIUMINT,
     },
     id_tienda:{
-        type: DataTypes.SMALLINT,
+        type: DataTypes.SMALLINT.UNSIGNED,
         allowNull:false,
         references:{
             model: "tiendas",
@@ -29,7 +29,7 @@ export const tiendaProductoModel = sequelize.define("tiendas_productos",
         }
     },
     id_producto:{
-        type: DataTypes.INTEGER,
+        type: DataTypes.INTEGER.UNSIGNED,
         allowNull:false,
         references:{
             model: "productos",

@@ -27,6 +27,7 @@ SET time_zone = "+00:00";
 
 CREATE DATABASE Market;
 USE Market;
+
 CREATE TABLE `carritos` (
   `id` int UNSIGNED NOT NULL,
   `cantidad` decimal(9,3) NOT NULL,

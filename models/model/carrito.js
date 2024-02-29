@@ -4,7 +4,7 @@ import { DataTypes  } from "sequelize";
 export const carritoModel = sequelize.define("carritos",
     {
         id:{
-            type: DataTypes.INTEGER,
+            type: DataTypes.INTEGER.UNSIGNED,
             allowNull: false,
             autoIncrement: true,
             primaryKey: true
@@ -13,15 +13,15 @@ export const carritoModel = sequelize.define("carritos",
             type: DataTypes.DECIMAL(9,3),
         },
         id_producto:{
-            type: DataTypes.INTEGER,
+            type: DataTypes.INTEGER.UNSIGNED,
             allowNull:false
         },
         id_tienda:{
-            type: DataTypes.SMALLINT,
+            type: DataTypes.SMALLINT.UNSIGNED,
             allowNull:false
         },
         id_user:{
-            type: DataTypes.MEDIUMINT,
+            type: DataTypes.MEDIUMINT.UNSIGNED,
             allowNull:false
         },
         created_at:{

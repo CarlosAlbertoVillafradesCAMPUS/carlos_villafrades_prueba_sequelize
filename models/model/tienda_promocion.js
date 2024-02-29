@@ -4,7 +4,7 @@ import { DataTypes } from "sequelize";
 export const tiendaPromocionModel = sequelize.define("tiendas_promociones",
 {
     id:{
-        type: DataTypes.MEDIUMINT,
+        type: DataTypes.MEDIUMINT.UNSIGNED,
         allowNull: false,
         autoIncrement: true,
         primaryKey: true
@@ -20,7 +20,7 @@ export const tiendaPromocionModel = sequelize.define("tiendas_promociones",
         type: DataTypes.DATE,
     },
     id_tienda:{
-        type: DataTypes.SMALLINT,
+        type: DataTypes.SMALLINT.UNSIGNED,
         allowNull:false,
         references:{
             model: "tiendas",
@@ -28,7 +28,7 @@ export const tiendaPromocionModel = sequelize.define("tiendas_promociones",
         }
     },
     id_promocion:{
-        type: DataTypes.MEDIUMINT,
+        type: DataTypes.MEDIUMINT.UNSIGNED,
         allowNull:false,
         references:{
             model: "promociones",

@@ -4,7 +4,7 @@ import { DataTypes  } from "sequelize";
 export const userModel = sequelize.define("users",
     {
         id:{
-            type: DataTypes.MEDIUMINT,
+            type: DataTypes.MEDIUMINT.UNSIGNED,
             allowNull: false,
             autoIncrement: true,
             primaryKey: true

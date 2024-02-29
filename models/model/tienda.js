@@ -4,7 +4,7 @@ import { DataTypes  } from "sequelize";
 export const tiendaModel = sequelize.define("tiendas",
     {
         id:{
-            type: DataTypes.SMALLINT,
+            type: DataTypes.SMALLINT.UNSIGNED,
             allowNull: false,
             autoIncrement: true,
             primaryKey: true
