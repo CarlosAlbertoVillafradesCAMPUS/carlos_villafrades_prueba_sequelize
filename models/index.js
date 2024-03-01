@@ -20,16 +20,19 @@ tiendaModel.belongsToMany(promocionModel, {through: tiendaPromocionModel, foreig
 promocionModel.belongsToMany(tiendaModel, {through: tiendaPromocionModel, foreignKey:"id_promocion"})*/
 
 // Definicion de las relaciones entre los modelos
-
+// relacion TIENDA Y TIENDA_PRODUCTO
 tiendaModel.hasMany(tiendaProductoModel, { foreignKey: 'id_tienda' });
 tiendaProductoModel.belongsTo(tiendaModel, { foreignKey: 'id_tienda' });
 
+// relacion PRODUCTO Y TIENDA_PRODUCTO
 productoModel.hasMany(tiendaProductoModel, { foreignKey: 'id_producto' });
 tiendaProductoModel.belongsTo(productoModel, { foreignKey: 'id_producto' });
 
+// relacion PROMOCION Y TIENDA_PROMOCION
 promocionModel.hasMany(tiendaPromocionModel, { foreignKey: 'id_promocion' });
 tiendaPromocionModel.belongsTo(promocionModel, { foreignKey: 'id_promocion' });
 
+// relacion TIENDA Y TIENDA_PROMOCION
 tiendaModel.hasMany(tiendaPromocionModel, { foreignKey: 'id_tienda' });
 tiendaPromocionModel.belongsTo(tiendaModel, { foreignKey: 'id_tienda' });
 
