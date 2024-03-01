@@ -41,19 +41,4 @@ export class carritoController{
             res.status(400).json({status:400, message: error.message})
         }
     } 
-
-    static async getCarrito(req,res){
-        const data = await userModel.findAll(
-            {
-                include: {
-                    model: carritoModel,
-                    include:{
-                        model:productoModel
-                    }
-                }
-            }
-        )
-
-        res.json({message: data})
-    }
 }   

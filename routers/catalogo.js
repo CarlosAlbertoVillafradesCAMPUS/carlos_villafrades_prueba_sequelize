@@ -2,6 +2,6 @@ import { Router } from "express";
 import { catalogoController } from "../controllers/catalogo.js";
 const appCatalogo = Router()
 
-appCatalogo.get("/", catalogoController.getCatalogo)
+appCatalogo.get("/:id_tienda", catalogoController.getCatalogo)
 
 export default appCatalogo;
